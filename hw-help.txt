@@ -1,0 +1,761 @@
+Michael S. — 1/24/2025 12:13 PM
+Is there a required Java JDK for us to use for the assignments? Asking because I already had JDK18 on my computer and chose to just use that
+Remy Jiang — 1/24/2025 12:15 PM
+Pretty sure it should be 8
+Zen — 1/24/2025 12:15 PM
+I've been using 8 specifically since that was is mentioned in lectures but it would be ideal to use something actually supported in 2025
+timoryg — 1/26/2025 5:39 PM
+Is it okay to add “throws DiceException” to the given test cases? The instructions say we are supposed to throw an exception when an invalid number of die/number of sides is inputted, but the test cases do not accept functions that throws an exception (unless it’s in getDieValue).
+Xander Presser — 1/26/2025 7:18 PM
+Was wondering this too
+Nathaniel Itty (SA) — 1/26/2025 7:34 PM
+I think it should be fine to add the exception to the test cases but hopefully the Professor can confirm. 
+
+For now, if you don't want to modify the tests you can also throw an IllegalArgumentException and all tests should work without any changes.
+Michael S. — 1/26/2025 7:52 PM
+I've been using IllegalArgumentException for mine 
+Arslan Ay — 1/26/2025 10:51 PM
+@timoryg  @Xander Presser  You may use JUnit 5's assertThrows() method to check if a particular exception is thrown during execution of the method that is tested.  assertThrows is available in org.junit.jupiter.api.Assertions , so you need to import it and add it to the project library. 
+It takes an exception type and an Executable value (the block of code that is expected to throw an exception), and returns true if the executable throws the specified exception.  You can pass a lambda expression which calls the tested method in place of the Executable.
+See the below link for an example.
+https://www.geeksforgeeks.org/junit-5-expected-exception/ 
+GeeksforGeeks
+%%title%% %%page%% - GeeksforGeeks
+Explore advanced techniques to effectively manage and assert expected exceptions, ensuring robust and reliable code using JUnit 5 Expected Exception.
+Image
+For example, when you test getDieValue() method for an invalid input you can use assertThrows() as follows:  (theroller is the DiceRoller object ; assume 30 is an invalid input for getDieValue() ) 
+assertThrows(DiceException.class, () -> theroller.getDieValue(30);
+Xander Presser — 1/28/2025 1:13 PM
+I noticed that on the github classroom it says the assignment is due at 17:59 utc (12:59 est) but on the canvas it says the assignment is due at midnight. Which is the correct due date?
+Arslan Ay — 1/28/2025 1:53 PM
+It is due by 11:59pm , tonight. We will look at your last commit timestamp for the submission time.
+koyobun — 2/1/2025 1:41 PM
+For assignment 2, having empty strings as input is valid, but if we’re returning an integer representation, I was wondering what would having all empty strings return?
+Michael S. — 2/1/2025 2:01 PM
+The function returns a string
+koyobun — 2/1/2025 2:30 PM
+Ah sorry that makes more sense
+Chris Walczak — 2/3/2025 11:14 AM
+When making tests, can one test method have multiple similar tests inside of it?  For example I want to test each individual number to make sure my code knows what each ocr digit looks like
+
+TestSingleNums{
+
+test("0")
+test("1")
+test("2")
+...
+
+} 
+or is it better practice to just have individual tests
+Remy Jiang — 2/3/2025 12:31 PM
+If we have a character that needs to be rendered like "<b><b><b>7" I assume we need to return the leading blank spaces as well as the number right?
+"<b><b><b>7" -> "<b><b><b>7"
+
+(Where <b> is a blank space)
+Michael S. — 2/3/2025 4:17 PM
+i believe the spec sheet says to ignore spaces
+ryan dillon — 2/4/2025 4:00 PM
+I'm trying to get started on milestone 1 for the term project, but am getting this error when I try to run a basic test: javax.xml.bind.JAXBException: Implementation of JAXB-API has not been found on module path or classpath.
+
+ 
+with linked exception:
+[java.lang.ClassNotFoundException: com.sun.xml.internal.bind.v2.ContextFactory]
+I thought I added all the required libraries but nothing seems to be working
+ryan dillon — 2/5/2025 12:15 PM
+as a follow-up if anyone else runs into this problem: add these two libraries to the project structure (sun.xml.bind.jaxb.impl:2.3.4 and javax.xml.bind.jaxb.api:2.3.1)
+Nathaniel Itty (SA) — 2/5/2025 1:37 PM
+Thank you, I'm sorry we didn't 'get back to you on this
+samruddhi — 2/5/2025 11:07 PM
+How can I get rid of this error? My code hasn't been building and I've tried changing the SDKs but it still doesn't change.
+
+java: invalid source release: 21
+Hazel — 2/6/2025 1:11 PM
+where do we get the escape configuration jar file? My lib folder is empty on git which is where it seems they're supposed to be
+NVM found it, in the escape manual github 
+Arslan Ay — 2/6/2025 8:33 PM
+It seems like GitHub did not include the .jar files when it initialized the repositories. You may dowmload them from the project starter code repo - see the link below. This is a public repo. Please let us know if you have any issues compiling the starter code, 
+https://github.com/WPI-CS4233-2025C/escape-starter/tree/main/lib
+GitHub
+escape-starter/lib at main · WPI-CS4233-2025C/escape-starter
+Contribute to WPI-CS4233-2025C/escape-starter development by creating an account on GitHub.
+escape-starter/lib at main · WPI-CS4233-2025C/escape-starter
+Michael S. — 2/8/2025 2:47 PM
+The milestone1 description mentions using a configuration file, but I don't see any such configuration file.
+I currently have  my "EscapeGameManagerImpl" class keep all the same variables that an Initializer can store, but then TODO started by mentioning building a game with players, but there is no instructions for player structure. So are the base tests in TODO just a formatting example for what will work by the final milestone? 
+Arslan Ay — 2/8/2025 4:45 PM
+The configuration file is the .egc file that the EscapeGameBuilder inputs. The Escape Manual has an example under the egc folder (see the below link). 
+https://github.com/WPI-CS4233-2025C/EscapeManual/blob/main/egc/test1.egc
+For milestone1, you will input a very simple egc file,  which is directly included in the assignment prompt (copied below) . And for milestone1 you  need to initialize the players in the EscapeGameManagerImpl.
+Coordinate type : SQUARE
+xMax :5
+yMax : 10
+Players : Chris Pat
+
+In following milestones, you will revise your code and have EscapeGameBuilder initialize the rest of the configuration parameters in EscapeGameManagerImpl.
+GitHub
+EscapeManual/egc/test1.egc at main · WPI-CS4233-2025C/EscapeManual
+Contribute to WPI-CS4233-2025C/EscapeManual development by creating an account on GitHub.
+EscapeManual/egc/test1.egc at main · WPI-CS4233-2025C/EscapeManual
+The goal of the milestone1 is "have you understand the starter code". Please contact me or Nathaniel if you have  any questions.
+Arslan Ay — 2/8/2025 4:45 PM
+See my post above. 
+You can store the players in the game manager the way you like; for example an array of Strings. 
+Michael S. — 2/8/2025 4:54 PM
+thank you!
+Michael S. — 2/8/2025 5:38 PM
+word of note to making it easier to load the ".egc" files, by default the EscapeGameBuilder seems to expect a full path to the egc file. you can use "new File(fileName).getCanonicalPath();" to force any project root paths to convert to a full path string 
+hopefully that's fine to share as code to the class since it's just so running student created tests doesn't mean manually changing every single file location string
+Nicholas "Fluxxi" Armstrong — 2/10/2025 1:30 PM
+I'm getting confused on using the EscapeGameManager interface because it's parameterized. Should EscapeGameManagerImpl also be parameterized?
+I'm assuming it should be and that is how I have currently implemented it, but I just want to make sure
+Nathaniel Itty (SA) — 2/10/2025 3:12 PM
+Yes, it should be.
+Michael S. — 2/10/2025 5:12 PM
+should our milestone 1 submission be left in a milestone1 branch for submission?
+Arslan Ay — 2/10/2025 5:37 PM
+Yes, correct.  Please make all your commits to milestone1 branch and don't commit to milestone1 after the deadline.  SA/TA will run the code in milestone1 branch.  When you start milestone2, you will branch out to milestone2.
+Chris Walczak — 2/10/2025 5:49 PM
+In the starter code the gameInitializer does not have a getPlayer function, it only has LocationInitializer that contains the player, however, when testing with minimalEGC5x10SQ.egc it returns no LocationInitializers
+
+my question is, do we have to make a function to get the players from the XML, or is there a different way of approaching this problem 
+Nathaniel Itty (SA) — 2/10/2025 5:53 PM
+You need to modify the EscapeGameInitializer. You will just need to add an object to store the players and implement the getters and setters (use the other items in the EscapeGameInitializer as an example).
+Chris Walczak — 2/10/2025 6:30 PM
+do we still get the players from locationInitializer?
+Nathaniel Itty (SA) — 2/10/2025 6:33 PM
+No, if you modify the EscapeGameInitializer correctly it should be parsed from the XML separately
+Noobius — 2/10/2025 9:07 PM
+In the Coordinate Interface it says we cannot modify the it but we are allowed to extend it. Are we also allowed to create new classes that implement the Coordinate Interface?
+Nathaniel Itty (SA) — 2/10/2025 9:08 PM
+Yes, you should create a class that implements the Coordinate interface (i.e. CoordinateImpl).
+Chris Walczak — 2/10/2025 10:34 PM
+For the coordinate types, I am not clear if a HEX board can be infinite of finite.  If it can be a finite board, would finding an out of bounds coordinate be the same as finite SQUARE boards?
+Nathaniel Itty (SA) — 2/10/2025 11:00 PM
+A HEX board can be both finite and infinite, and yes, finding an out of bounds coordinate would be the same for both.
+Javier — 2/11/2025 1:08 AM
+is EscapeConfigurator already supposed to be implemented? In my EscapeGameBuilder class there are a few calls to it but it says it cant find it. I didnt see any mention of it in the assignment/project description so Im at a bit of a loss. Also these two imports are also giving me an error, not sure whats wrong
+import econfig.*;
+import org.antlr.v4.runtime.*;
+ 
+Nicholas "Fluxxi" Armstrong — 2/11/2025 7:27 AM
+For some reason the lib folder in the starter code doesn’t get copied when you fork the repository. I’d recommend downloading the starter repo directly and then just dragging the lib folder from it to your project
+That’s what fixed it for me
+Noah — 2/11/2025 10:06 AM
+I'm having the same issue, but whenever I try to go back to the starter repo I get a 404. Do you know any other way to access the original?
+Nicholas "Fluxxi" Armstrong — 2/11/2025 10:07 AM
+Huh, I can send you the zip file
+Nicholas "Fluxxi" Armstrong — 2/11/2025 10:24 AM
+here, I can just send it here I think
+Attachment file type: archive
+escape-starter-main.zip
+8.02 MB
+Noah — 2/11/2025 10:25 AM
+Thank you!
+Nicholas "Fluxxi" Armstrong — 2/11/2025 10:29 AM
+No problem!
+Noah — 2/11/2025 10:45 AM
+What JDK are people using for this assignment? I've had no problem with this on previous assignments, but I am getting the following error whenever I try test configurations: Exception in thread "main" java.lang.UnsupportedClassVersionError: econfig/EscapeConfigurator has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 52.0.
+Nicholas "Fluxxi" Armstrong — 2/11/2025 10:46 AM
+that error message suggets that your java version is behind the one used by the precompiled escapeconfigurator jar, so it makes sense why it would cause problems for this assignment only
+and it's the JRE not the JDK i think
+I think I'm using 17.0.8.1 but I'm not sure
+Remy Jiang — 2/11/2025 10:49 AM
+Check your project structure.
+
+Should be File, Project Structure
+This oneee c:
+Image
+It should work with this one
+Nicholas "Fluxxi" Armstrong — 2/11/2025 3:24 PM
+I'm kinda confused on what my tests are supposed to be
+I have a test that confirms that my xMax, yMax, players, and coordinatetype are all being set correctly, is that all that I need to have for this milestone?
+Arslan Ay — 2/11/2025 5:15 PM
+GitHub did not include the .jar files when it initialized the repositories. You may dowmload them from the project starter code repo - see the link below. This is a public repo. Please let us know if you have any issues compiling the starter code, 
+https://github.com/WPI-CS4233-2025C/escape-starter/tree/main/lib
+GitHub
+escape-starter/lib at main · WPI-CS4233-2025C/escape-starter
+Contribute to WPI-CS4233-2025C/escape-starter development by creating an account on GitHub.
+Arslan Ay — 2/11/2025 5:16 PM
+I have uploaded some sample tests for milestone1 over the weekend. They are linked to the Escape - Milestone1 dropbox on Canvas (look under the "Sample Tests" section).  You will need to adjust the path to the EGC configuration file according to where you stored it in your own project structure.
+Chris Walczak — 2/11/2025 5:22 PM
+for out of bounds tests, can we assume the coordinates will always be positive for milestone1? It seems all the tests are only handling a square so am I writing makeCoordinate() to fit just squares for now?
+Javier — 2/11/2025 7:19 PM
+What java should we be using? I thought I has the right one (jdk 1.8) but when I went to run the test files I got this error
+bad class file: /C:/Users/monca/IdeaProjects/escape-mexicanminion/lib/Escape Configuration Tool.jar!/econfig/EscapeConfigurator.class
+    class file has wrong version 61.0, should be 52.0
+    Please remove or make sure it appears in the correct subdirectory of the classpath.
+jacob — 2/11/2025 8:03 PM
+I think I fixed this by switching to Jdk 17 and making sure to have the correct lib folder
+lost panda — 2/11/2025 9:07 PM
+I have this issue in EscapeGameBuilder, all my lib files are downloaded
+Image
+Does anyone know how to fix this? 
+Hien Hoang — 2/11/2025 9:08 PM
+i think it might be because ur lib is missing the EscapeConfigurationTool.jar file
+lost panda — 2/11/2025 9:09 PM
+my lib has it
+Image
+Hien Hoang — 2/11/2025 9:09 PM
+oh
+lost panda — 2/11/2025 9:09 PM
+odd
+Huy — 2/11/2025 9:57 PM
+On TODO.md, it says Build game with one CLEAR [default] location as an example. What does this mean?
+Chris Walczak — 2/11/2025 10:10 PM
+^
+Noobius — 2/11/2025 10:28 PM
+I interpreted it as given a coordinate in your egc file that doesnt have a type specified like:
+
+Location:
+(4,8)
+
+vs
+
+Location:
+(4.8) BLOCKED
+
+the default location type is CLEAR.  So just create a game manager with a tile that is CLEAR which can either be specified or not in the egc file
+Hien Hoang — 2/11/2025 11:16 PM
+am i supposed to push to main or a remote branch called milestone1?
+Remy Jiang — 2/11/2025 11:17 PM
+Should be pushed to milestone1 branch
+Rawi — 2/11/2025 11:18 PM
+Wait were we supposed to merge the milestone 1 branch into main branch and submit the url for the main branch? Or submit the url for the mileston 1 branch?
+I submitted the url for the main branch
+Remy Jiang — 2/11/2025 11:18 PM
+I assume that's fine, they can see what branches are in your repo probably c:
+Rawi — 2/11/2025 11:19 PM
+Fabulous
+Remy Jiang — 2/11/2025 11:19 PM
+Maybe leave a note though,
+Nathaniel Itty (SA) — 2/11/2025 11:19 PM
+Yes, it's fine if you submit either branch. We will be checking out the Milestone1 branch so just make sure everything is there.
+lost panda — 2/11/2025 11:22 PM
+is getRow() supposed to be implemented?
+in Coordinate
+Huy — 2/11/2025 11:23 PM
+Believe so, it was in the sample tests
+Michael S. — 2/12/2025 12:29 AM
+lol, just renamed my method calls last minute since I somehow missed this in the interface and named mine "getX()" and "getY()". I pushed the changes at like 12:13am. I assume that's close enough to 11:59pm and trivial enough a change to not knock my grade down?
+Xander Presser — 2/14/2025 2:25 PM
+When are the tests for milestone 2 going to be put up?
+Image
+Simon — 2/14/2025 2:39 PM
+I'm having the same issue, I just want to make sure my code fulfills the requirements
+Michael S. — 2/14/2025 2:45 PM
+I'm trying to judge when to full swing into working on the assignment because I'm worried to do a bunch of implementation work just for a test to show I have to rewrite a big thing
+Arslan Ay — 2/14/2025 2:47 PM
+I will post the test today, however, the test examples we provide will be a subset of the test we will use for grading. You are expected to come up with your own tests and make sure to cover all boundary cases in your tests.
+I talked about some test examples during the Tuesday lecture. The recording is available through Echo360.
+Arslan Ay — 2/14/2025 9:44 PM
+I posted the sample tests for milestone2 on Canvas. They are attached to the assignment dropbox (look under title "Sample Tests")  https://canvas.wpi.edu/courses/70041/assignments/397140
+@Michael S. @Simon @Xander Presser
+The WPI Hub
+The WPI Hub | Discover Canvas
+IT Service & Support enables the effective use of technology for teaching, learning, research, and the administrative work of the University by providing technology and mobility solutions, support, IT content and communications.
+Image
+Chris Walczak — 2/15/2025 2:16 PM
+For the makeGameManager() function, it says we will need to change it to add location and peice info.  The way I have it I am just creating a EscapeGameManagerImpl with the gameInitializer and setting everything in the EscapeGameManagerImpl constructor using the gameInitializer like the builder pattern.  Is this wrong? I dont think I have to change anything in the makeGameManager() this way
+Michael S. — 2/15/2025 2:29 PM
+that seems to work for me, it's just that before you technically didn't need to try loading them from the config since the milestone1 config didnt need them
+Chris Walczak — 2/16/2025 5:33 PM
+I wanted to test a class I made that implements EscapePiece, and in the class I made I added a new method that I need to test.  In my test method however I need to typecast to the specific class in order to acess the custom method I made for this class.  Is this an indication of necessary design improvements?
+I cannot modify EscapePiece interface so this was the only other way I could come up with to test
+Arslan Ay — 2/16/2025 6:51 PM
+Yes, explicit type casting usually is not advised. But it is hard to tell if your code has design problems without looking at your code. 
+If you need to add methods to the EscapePiece interface,  I would suggest you to extend it , i.e., define your own interface which extends EscapePiece  interface. Then, your class can implement this extended interface.
+Javier — 2/17/2025 6:38 PM
+should milestone 2 build off of milestone 1? As in, should milestone 2 keep the code from milestone 1?
+Nathaniel Itty (SA) — 2/17/2025 6:39 PM
+Yes you should
+Nicholas "Fluxxi" Armstrong — 2/17/2025 9:02 PM
+I don't really understand why the EscapeGameManager interface is parameterized, it seems like the only way to implement it properly is just to directly give it the CoordinateImpl class, otherwise it's pretty much impossible to implement makeCoordinate. And if I do that, I don't know why the EscapeGameManagerImpl class should be parameterized, that seems to have no use at all. I guess I'm just looking for clarity on why these things are the way they are
+If EscapeGameManagerImpl isn't supposed to be parameterized, then it would make sense but I've been given conflicting answers on that
+Nathaniel Itty (SA) — 2/17/2025 9:22 PM
+The reason the EscapeGameManager Interface is parameterized is because of the type of the coordinate. You need to create your own class that implements the Coordinate interface, and your game manager will use that type instead of the interface type.
+
+For example, you might have
+public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameManager<CoordinateImpl>
+In this case, setting the parameter to be CoordinateImpl, this replaces all occurences of C in the interface to use CoordinateImpl instead. For example, the makeCoordinate function will return a CoordinateImpl which you can use. In the same way, the move and getPieceAt functions will be able to take in a CoordinateImpl, and in your game manager implementation those functions can use methods specific to your CoordinateImpl type.
+Nicholas "Fluxxi" Armstrong — 2/17/2025 9:24 PM
+That makes sense, but why should my implementation be parameterized? I don’t think there’s anywhere in the class that I’d want to use C instead of CoordinateImpl
+Nathaniel Itty (SA) — 2/17/2025 9:29 PM
+You need the parameter to specify that you want to use the CoordinateImpl. We are giving you the interface for the game manager, which doesn't know what the CoordinateImpl is.
+
+I'm sorry I'm not sure if I'm getting what you're asking completely
+Nicholas "Fluxxi" Armstrong — 2/17/2025 9:32 PM
+Sorry, i worded that poorly. Wouldn’t public class EscapeGameManagerImpl implements EscapeGameManager<CoordinateImpl> make more sense than public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameManager<CoordinateImpl> 
+Nathaniel Itty (SA) — 2/17/2025 9:57 PM
+Sorry if this is confusing. This is a property of the Java generics type system, we are using an interface with a bounded type parameter: 
+public interface EscapeGameManager<C extends Coordinate>
+Normally, a parameterized interface is generic across a parameter <T> where T can be any type, but here we are saying it has to be a type that extends Coordinate.
+
+You need <C extends Coordinate> in the GameManager because the class that implements the interface is generic for any Coordinate type, and it respects the type of the interface. Any class the implements the interface should follow the same generic type parameter.
+
+Technically, the EscapeGameManager<CoordinateImpl> is incorrect, instead it should be EscapeGameManager<C>. This would allow you to instantiate it with any type of coordinate, and decide when you create the object rather than in the class itself. However, if we did it this way you would have to cast between types in all methods that use a Coordinate.
+Nicholas "Fluxxi" Armstrong — 2/17/2025 10:10 PM
+I understand generics and such, and I understand why EscapeGameManager is using them, but I don't think that EscapeGameManagerImpl could ever be parameterized properly. As it stands, it's parameterized but the parameter is never used because EscapeGameManager is directly set to use CoordinateImpl, but I don't think it's possible to have it be public class EscapeGameManagerImpl<C extends Coordinate> implements EscapeGameManager<C> because of makeCoordinate, which requires returning a new object of class C, but type erasure means that, as I understand it, you can't instantiate an object of a type passed as a parameter
+if makeCoordinate was changed so that it was passed a coordinate object and it then set the parameters of it based off of the rules of the game manager kinda like dependency injection, then it could work but we aren't allowed to change the EscapeGameManager interface so we can't change the signature of makeCoordinate 
+Nathaniel Itty (SA) — 2/17/2025 10:25 PM
+You're right you can't instantiate a parameterized type so it would break makeCoordinate. If I understand correctly the only reason it's parameterized is because you are creating your own coordinate and game manager classes. Maybe the best we could do is make an assumption in the methods instead and return a CoordinateImpl but I'm honestly not sure
+Nicholas "Fluxxi" Armstrong — 2/18/2025 12:51 AM
+Figured out a solution that doesn't alter forbidden code, it's a little weird but you can add a field to EscapeGameBuilder that takes a BiFunction<Integer, Integer, C> (you also need to parameterize the builder for this) and then add a setter for that, and you can pass CoordinateImpl::new to it. You also need to add this field to the EscapeGameManagerImpl and then use it in makeCoordinate, and then it works. Fully parameterized! 
+trajan — 2/18/2025 1:13 PM
+quick question:
+In milestone2, getMoveResult() will always return NONE, since there is no check for the end of the game yet (see item#8).
+what is the type of NONE? i'm assuming that it means null in java
+Michael S. — 2/18/2025 1:16 PM
+there is a specific result enum of NONE i believe
+trajan — 2/18/2025 1:18 PM
+oh i found it now. 
+/**
+     * WIN:  Player that moved wins the game
+     * LOSE: Player that moved loses the game
+     * DRAW: The game is over and is a draw
+     * NONE: The game is still in progress and neither player has won
+     */
+    public static enum MoveResult { WIN, LOSE, DRAW, NONE }
+
+NONE meaning still in progress is somewhat confusing..
+Chris Walczak — 2/18/2025 3:37 PM
+When a player makes an invalid move, does the next turn go to the other player or does the player get another chance for a valid move?
+Nathaniel Itty (SA) — 2/18/2025 3:38 PM
+The player should get another chance to make a valid move, the turns should not change until they make a valid move.
+Chris Walczak — 2/18/2025 3:59 PM
+Im also a bit confused where in the code I should switch turns, the way I have it now its in a TurnManager class and it happens in the move(to,from) method.  Its a bit hard to debug this and add conditions
+Nathaniel Itty (SA) — 2/18/2025 4:04 PM
+How does your TurnManager work? It is a good idea to encapsulate tracking of the turn into a class, but it should be pretty simple. You should only need a String or integer variable to keep track of the current player and update it on each turn.
+Chris Walczak — 2/18/2025 4:05 PM
+The TurnManager knows the players, and keeps track of current player and has a function to switch turn
+This class is used in the GameStatus implementation I have to get current player and do all the things it needs to do
+Chris Walczak — 2/18/2025 4:14 PM
+since move returns GameStatus, if I do nextTurn() it will always send a gamestatus with the incorrect player which is basically the problem im having 
+Nathaniel Itty (SA) — 2/18/2025 4:23 PM
+How come the game status returns the player?
+Chris Walczak — 2/18/2025 4:24 PM
+gamestatus has the TurnManager object that has current player
+Nathaniel Itty (SA) — 2/18/2025 4:31 PM
+I'm wondering how the player is being used after it's returned, why it needs to be the previous player
+Chris Walczak — 2/18/2025 4:31 PM
+from  = new CoordinateImpl(4,1);
+        to  = new CoordinateImpl(11,1);
+        gameStatus = escapeGameManager.move(from, to);
+        assertTrue(gameStatus.isValidMove());
+        assertEquals(gameStatus.finalLocation(), to);
+ 
+these were the provided test cases
+when caling isValid after returning the move, isValid needs to check if the from coordinate is from the current player 
+Nathaniel Itty (SA) — 2/18/2025 4:34 PM
+You shouldn't need to check the move again. You can store the result of the previous move and final location in your implementation of the game status.
+Chris Walczak — 2/18/2025 4:37 PM
+Or could I just make a new GameStatus and return that?
+Nathaniel Itty (SA) — 2/18/2025 4:41 PM
+Yes you could do that
+Arslan Ay — 2/18/2025 5:35 PM
+Revised the milestone description and clarified this.
+Noobius — 2/18/2025 5:39 PM
+For "If the result of isValidMove() is false, then the player who attempted the move will make the next call to move(). That is, players get a chance to make a correct move if they make an invalid one. The moving player can only change after a valid move has been made." is all that is expected is that you do not change whose turn it is? I assume in future milestones we will have some sort of user interface that continues to prompt the user to enter a valid move until they do
+Matt Walsh — 2/18/2025 6:01 PM
+I noticed some of the tests like invalidFlyMove attempt to move a piece from (4,1) to another coordinate, and then move it again to a different coordinate, so the piece at (4,1) is moved twice but shouldn't there be no piece at (4,1) after it is moved the first time? My implementation actually moves the pieces on the board -are we just supposed to validate the move and not actually move the piece?
+Nathaniel Itty (SA) — 2/18/2025 6:03 PM
+The test moves the piece at (4,1) twice because the first move is invalid. The piece should stay at it's original location when this is the case. If the player makes an invalid move, they will be prompted to move again.
+Nathaniel Itty (SA) — 2/18/2025 6:06 PM
+You won't need to have an interface necessarily. All that's expected is that the state of the game shouldn't change at all if an invalid move is made, unless there are no valid moves possible for the player.
+Matt Walsh — 2/18/2025 6:06 PM
+Makes sense, thanks
+Xander Presser — 2/18/2025 8:20 PM
+I'm getting this issue w my github after my latest push, not sure why, haven't been able to fix it
+Image
+Image
+Xander Presser — 2/18/2025 8:33 PM
+Have not had issues with pushing to this branch prior to this
+Nicholas "Fluxxi" Armstrong — 2/18/2025 8:38 PM
+I think I had an issue like that with a previous milestone/project, try grabbing the html link from the github page and then going into repository settings and putting in the new link
+I'm not sure if that will fix it but it might help
+Xander Presser — 2/18/2025 8:46 PM
+Ty for the help, unfortunately did not work. Though i am now only getting the first message while pulling
+Nicholas "Fluxxi" Armstrong — 2/18/2025 8:51 PM
+weird
+good luck
+Xander Presser — 2/18/2025 8:52 PM
+Yeah, thx
+Andy Truong — 2/18/2025 9:22 PM
+A valid path must not have another piece (no matter who the piece belongs to) within the path right? 
+Chris Walczak — 2/18/2025 9:24 PM
+its not valid when the moving piece is a distance piece, but if it is a fly piece its okay
+pretty sure doesnt matter who the piece belongs to 
+When I update the new piece location I get the same issue with changing players.  isValid() checks if the from player exists on the board but when the piece moved and the isValid() is called again, it thinks the piece does not exist.  Is there an easier way of handling update piece location? 
+Nathaniel Itty (SA) — 2/18/2025 10:34 PM
+Sorry I'm not exactly sure what would cause this. You mention that it was after your latest push, is the repo up to date then? If so, are you able to try and clone the repository again?
+Nathaniel Itty (SA) — 2/18/2025 10:35 PM
+Yes, if there is another piece in the path it can't go through that piece unless the piece has the FLY or later the JUMP attribute.
+Nathaniel Itty (SA) — 2/18/2025 10:41 PM
+Could you explain the issue a little more? I'm sorry I'm having a hard time understanding the error, it depends on how you are updating the piece location in your implemtation.
+Xander Presser — 2/18/2025 10:43 PM
+yeah i tried recloning and i still have the same issue
+I didnt do anything to the repo inbetween the push before that one and this one
+Nathaniel Itty (SA) — 2/18/2025 10:43 PM
+Could you try to reauthenticate yourself on GitHub Desktop?
+Xander Presser — 2/18/2025 10:43 PM
+though i realized im still able to push to the repo so im just going along with it? but not sure what that warning is about
+Michael S. — 2/18/2025 10:45 PM
+the warning you get when trying to pull is because the escape repo you have is a fork from the assignment one which we don't have access to, so it inherits the security access when trying to grab everything
+Xander Presser — 2/18/2025 10:46 PM
+Yeah i'm still getting the error, also, the 2nd reference error is back now
+Xander Presser — 2/18/2025 10:46 PM
+oh ok sick thx didnt realize that was normal
+Michael S. — 2/18/2025 10:46 PM
+as long as you can get code from the repo and push to it, then it's nothing to worry about
+but that's the main reason for the little doesnt exist pop up
+Nathaniel Itty (SA) — 2/18/2025 10:50 PM
+In the root directory of your repository can you do
+git remote show origin?
+Xander Presser — 2/18/2025 11:10 PM
+Image
+Nathaniel Itty (SA) — 2/18/2025 11:14 PM
+Could you maybe try to go on the repository in on the GitHub website and click on Code -> open with GitHub desktop?
+
+I don't know what else could cause the issue
+Xander Presser — 2/18/2025 11:17 PM
+That just brings me to main but i still get the pop up whenever i fetch? im probably just going to go along with it bcz it hasnt been causing any actual problems yet? 
+Nathaniel Itty (SA) — 2/18/2025 11:20 PM
+Yeah I guess, maybe the Professor might know
+Arslan Ay — 2/19/2025 11:42 PM
+I cloned your repo and tried the replicate the problem; but, everything seems ok. I couln't replicate the issue you mentioned. Let's take a look at it after class on Friday. 
+Xander Presser — 2/19/2025 11:48 PM
+Thank you, talk to you then.
+trajan — 2/21/2025 4:55 PM
+For milestone3, will we get sample .egc files? It looks like there are cases to test on each of the four types of boards: finite and infinite for both square and hex
+Michael S. — 2/21/2025 5:34 PM
+for infinite boards, is a 0 in either X or Y meant to make the entire board infinite or just that axis of the board?
+Nicholas "Fluxxi" Armstrong — 2/21/2025 7:52 PM
+The assignment for milestone 2 suggested that it’s for an individual axis, but the GitHub manual seems to say that a 0 in either makes the entire board infinite so I also don’t know. I went with individual axes
+Arslan Ay — 2/22/2025 5:38 PM
+Only the axis that has the 0 will be infinite.  So, you can have a board which has finite number of rows but infite columns and vice versa.
+Michael S. — 2/22/2025 5:39 PM
+okay perfect, I've been doing it that way  but wanted to make sure
+Arslan Ay — 2/22/2025 5:43 PM
+I posted the tests on Canvas. Nathaniel and I added several additional tests to what I was planning to post originally. There are examples tests for both boards (SQUARE , HEX) and all new movement patterns  (DIAGONAL, LINEAR), and game end rules/checks (SCORE, all pieces exited, no valid moves available), etc. 
+The provided example .ECG files are illustrated in the attached pdf.
+Attachment file type: acrobat
+BoardExamples.pdf
+256.19 KB
+Arslan Ay — 2/22/2025 5:44 PM
+Yes, it should be individual axis. Your implementation is correct.
+Michael S. — 2/22/2025 6:04 PM
+what is the reason why this should be invalid? The board is infinite and BIRD can fly over block spaces yet the test is expecting the move to be invalid
+Image
+Image
+Nathaniel Itty (SA) — 2/22/2025 6:16 PM
+Sorry I’m not able to run the test now but judging by the comment (bird can fly over) we might have made a mistake setting up the test
+Michael S. — 2/22/2025 6:17 PM
+It's no biggie, I was just blanket running all the tests after my refactoring and half "pretty sure I just change this for the new movement strategy" code writing. I was expecting all win condition stuff to fail but was surprised when I saw this one fail so I looked closer at it.
+Arslan Ay — 2/23/2025 3:49 PM
+I looked into this test. Since BIRD can FLY, and FLY oieces can cross over BLOCK locations, this should be a valid move. The comment says it is valid, but the assertion checks for the opposite. Sorry for the typo! It seems like I kept the wrong test when I merged tests from multiple files.   I uploaded the correct version.
+Chris Walczak — 2/24/2025 4:00 PM
+where can we find the milestone 2 tests that were used to grade the milstone 2 assignemnt ?
+Nathaniel Itty (SA) — 2/24/2025 4:40 PM
+I'm not sure if they will be posted, but I just replied to your email with the test you wanted to look at.
+Zen — 2/24/2025 4:43 PM
+I think there is a bug with the provided tests.
+
+This move is not actually valid due to the distance attempted being too large. The BIRD piece can only fly 4 spaces, but is attempting to move more than that.
+
+The distance it's attempting to move is 3*sqrt(2) which is a bit more than 4, the defined maximum for this piece.
+// Milestone3SampleTestsSQUARE.java
+    void diagonalValidMoveCanFly() {
+        // Checks for valid DIAGONAL move; BIRD can move over DOG.
+        Coordinate from  = new CoordinateImpl(-1,4);
+        Coordinate to  = new CoordinateImpl(2,1);
+        GameStatus gameStatus = escapeGameManager.move(from, to);
+        assertTrue(gameStatus.isValidMove());
+        assertEquals(gameStatus.finalLocation(), to);
+    }
+Changing the to Coordinate to use 1, 2 (an empty square still over the DOG piece) makes the test pass, just to confirm that my logic is sound but that it is failing at the distance check. 
+also never has a CGP Grey video been more relevant to my education
+Image
+Michael S. — 2/24/2025 5:14 PM
+That's a move of distance 3
+Diagonal is considered a move of space distance 1 just like vertical or horizontal
+Nathaniel Itty (SA) — 2/24/2025 5:17 PM
+Yes, that's correct, we are not using Euclidean distance for diagonal movement.
+Xander Presser — 2/24/2025 7:00 PM
+Is it a legal move for a piece to be moved to it's current spot?
+Nathaniel Itty (SA) — 2/24/2025 7:00 PM
+No
+Xander Presser — 2/24/2025 7:02 PM
+Ty!
+timoryg — 2/24/2025 11:05 PM
+Should this test have the from coordinate as (0,1) and the to coordinate as (0, -1)? The current from piece is from player B which would make it an invalid move. The description also mentions a dog, when the from piece is currently a horse.
+Image
+Image
+Michael S. — 2/24/2025 11:09 PM
+(0,1) is a dog that has to move over the exit to make that move, and since the "to" location is valid it crosses through the exit and leaves the game
+it's also a PlayerA move since nobody has moved yet
+Nathaniel Itty (SA) — 2/24/2025 11:12 PM
+Yes you're right, it should be (0, 1) to (0, -1)
+timoryg — 2/24/2025 11:14 PM
+Thank you!
+Noobius — 2/24/2025 11:45 PM
+I am running into issues with the moveOverBlockedLocationInValidMove() and orthogonalInvalidDiagonal() tests as they are returning as invalid moves because it is the wrong players turn. I commented out the player turn checking logic and have made sure I am handling checking the following correctly:
+
+If a location that is traveled over by a non-flying is blocked it returns an invalid move status
+If a piece that orthogonal movement tries to move diagonally it returns and invalid move status
+
+I am just wondering if anyone else if running into this issue or if I am just handling player switching incorrectly.
+Michael S. — 2/24/2025 11:50 PM
+neither moveOverBlockedLocationInValidMove() nor orthogonalInvalidDiagonal() even have a second player move so it's 100% an issue with your turn handling
+I'd give advice on turn switching but I decided to be silly and do mine with an index rather than boolean like I assume most are
+Noobius — 2/24/2025 11:57 PM
+I might be wrong but I thought turn should be maintained between tests if you are using the same game manager. Like if I make a move in test1 in test2 it should be playerBs turn.
+Michael S. — 2/25/2025 12:02 AM
+The tests use a new manager each time so I've got no clue how you even managed to make that happen
+it would also break proper testing form since your tests would be relying on previous tests
+this part of the sample test files means it makes a new manager from the config before every single test is run
+Image
+Noobius — 2/25/2025 12:03 AM
+Thats what I thought too I must be flipping the turn somewhere I shouldn’t
+Michael S. — 2/25/2025 12:03 AM
+thankfully IntelliJ got a pretty strong debugger so shouldnt be too hard to tell
+Noobius — 2/25/2025 12:04 AM
+Awesome thanks for your help
+Nicholas "Fluxxi" Armstrong — 2/25/2025 1:59 AM
+is there any difference in terms of numbers for linear movement on a hex board vs a square board? I know I don't need to support linear for square for this milestone, but I can't see any difference between the two for this
+to be fair hex kinda confuses me rn so maybe this is just a result of that, but it seems like its a valid move (ignoring board state factors) if only the row or column is changing or if the row and column change equally (in terms of absolute change) 
+no there is a difference I see now, at least for a specific movement but I can't figure out the pattern for it
+going from 0,1 to -1,0 in the example hex board is not legal despite being both coordinates losing 1
+oh, is it just that they need to change in opposite directions for "diagonal" movement? that might be it
+Michael S. — 2/25/2025 2:33 AM
+hex board doesnt support diagonal movement going up-right or down-left
+Seth Frank — 2/25/2025 9:34 AM
+For the moveOntoBlockedLocation test for HEX1, for the first move, would it be valid since the bird can fly over (2,-3) and land on (2,-4), therefore being valid
+Nathaniel Itty (SA) — 2/25/2025 9:37 AM
+Yes it is valid. It should be fixed on Canvas now (see above).
+Seth Frank — 2/25/2025 1:02 PM
+For pieces with fly, if they want to move to a coord with a piece or a block on it, can they fly over it to the next valid coordinate (assuming they have the distance to do so), or would it just be an invalid move?
+Hien Hoang — 2/25/2025 1:06 PM
+i think just make it invalid
+Nathaniel Itty (SA) — 2/25/2025 2:07 PM
+If the destination ("to") location in the move has a piece or block on it, then the move is invalid they shouldn't be moved to a different position.
+Xander Presser — 2/25/2025 2:19 PM
+If a board is finite, should it not support negative indices?
+Nicholas "Fluxxi" Armstrong — 2/25/2025 2:40 PM
+this was also unclear to me, the manual says it shouldn't but I was under the impression it should
+I think the professor said it should as well but I'm not sure
+Zen — 2/25/2025 2:49 PM
+I'd argue yes, although ideally the implementation should be agnostic to whether or not indices are positive or negative
+Noobius — 2/25/2025 6:48 PM
+I think I am still confused for keeping track of whose turn it is. In this test 
+
+@Test
+    void moveOverBlockedLocationInValidMove() {
+        // move PlayerB DOG from (0, 3) to (-2, 3), (-1, 3) is BLOCK
+        Coordinate from = new CoordinateImpl(0, 3);
+        Coordinate to = new CoordinateImpl(-2, 3);
+        GameStatus status = escapeGameManager1.move(from, to);
+        assertFalse(status.isValidMove());
+        assertEquals(from, status.finalLocation());
+    }
+
+
+It creates a new game manager object so should it not be playerA's turn? The piece we are trying to move belongs to playerB so am I correct in returning a wrong player invalid move?
+Zen — 2/25/2025 7:01 PM
+I originally thought this was the extra credit test. I noticed this too, and the test just passes since its only checking for an invalid move. 
+Noobius — 2/25/2025 9:28 PM
+How are we supposed to know/check if a player cannot make any valid moves?
+Simon — 2/25/2025 9:56 PM
+What I do is for each possible future move, check if it's valid. Return true once the method reaches the first valid move 
+trajan — Yesterday at 2:03 AM
+In this test, why is the move invalid? The dog can move up to 5 units and there is a path around the block that is only 3 long.
+Note - as previously mentioned, the test as given tries to move playerB first. PlayerA can make an inconsequential move first and then the test is purely checking if playerB's dog can reach (-2, 3). For instance,
+@Test
+    void moveOverBlockedLocationInValidMove() {
+        // move playerA BIRD first from (2, -2) to (2, -1)
+        Coordinate from = new CoordinateImpl(2, -2);
+        Coordinate to = new CoordinateImpl(2, -1);
+        GameStatus status = escapeGameManager1.move(from, to);
+        assertTrue(status.isValidMove());
+        assertEquals(to, status.finalLocation());
+        
+        // attempt to move PlayerB DOG from (0, 3) to (-2, 3), but (-1, 3) is BLOCK
+        // DOG can move 5
+        from = new CoordinateImpl(0, 3);
+        to = new CoordinateImpl(-2, 3);
+        status = escapeGameManager1.move(from, to);
+        assertFalse(status.isValidMove());
+        assertEquals(to, status.finalLocation());
+    }
+ 
+Image
+Similarly, the extra credit test checks that the dog falls through the exit, but there is a path less than 5 units long that avoids the exit:
+Image
+I believe these paths are valid since each individual move is simply moving from a cell to one of its neighbors.
+In general, a piece moves along a path that is a sequence of individual moves. Each individual move involves a move from a location to one of it's neighbors. The movement pattern identifies which subset of the neighbors a piece may move to.
+Arslan Ay — Yesterday at 5:40 AM
+You can assume that finite boards will not have negative indices.
+Arslan Ay — Yesterday at 6:25 AM
+Yes, you are correct. I agree that this test is not checking the condition it is intended for. The move fails because the game is supposed to start with a PlayerA move. 
+You can update this test as follows. The below modified test first moves a PlayerA piece then moves Player B - DOG. 
+    @Test
+    void moveOverBlockedLocationInValidMove() {
+        // move PlayerA FROG from (-2, -2) to (0, -2), VALID move
+        Coordinate from = new CoordinateImpl(-2, -2);
+        Coordinate to = new CoordinateImpl(0, -2);
+        GameStatus status = escapeGameManager1.move(from, to);
+        assertTrue(status.isValidMove());
+        assertEquals(to, status.finalLocation());
+
+        // move PlayerB DOG from (0, 3) to (-2, 3), (-1, 3) is BLOCK
+        from = new CoordinateImpl(0, 3);
+        to = new CoordinateImpl(-2, 3);
+        status = escapeGameManager1.move(from, to);
+        assertFalse(status.isValidMove());
+        assertEquals(from, status.finalLocation());
+    }
+ 
+Arslan Ay — Yesterday at 6:32 AM
+For HEX coordinates, we are only supporting LINEAR movement pattern. So,  an individual move should be on a straight line, i.e.,  piece can not change its direction during a single move. The examples you provided are not linear movements.
+trajan — Yesterday at 6:47 AM
+Thanks for your reply. I will try to simplify my code to only validate moves that are wholly in the same direction. 
+One more question: in this test, my code evaluates that player A has won as soon as they move their last piece onto the exit cell on the third move of the game. How come player B gets a chance to move after A has already won?
+@Test
+    void testPlayerNoPieceEndGame2() {
+        // EXIT is at (0,0)
+        // Next move Dog (playerA) from (0,1) to (0,0)->EXIT ; Player A score :1
+        GameStatus status = escapeGameManager2.move(new CoordinateImpl(0, 1), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // Next move Dog (playerB) from (0,2) to (0,0)->EXIT ; Player B score :1
+        status = escapeGameManager2.move(new CoordinateImpl(0, 2), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // Next move FROG (playerA) from (0,3) to (0,0)->EXIT ; Player A score :2
+        status = escapeGameManager2.move(new CoordinateImpl(0, 3), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // i added this assertEquals to confirm that A has already won
+        assertEquals(GameStatus.MoveResult.WIN, status.getMoveResult());
+        // Next move SNAIL (playerB) from (1,2) to (1,0) ; Player A score :2
+        status = escapeGameManager2.move(new CoordinateImpl(1, 2), new CoordinateImpl(1, 1));
+        assertTrue(status.isValidMove());
+        // It is now playerA's turn, but PlayerA has no pieces left on board and has higher score, so they win.
+        assertTrue(status.getMoveResult() == GameStatus.MoveResult.WIN);
+    }
+Arslan Ay — Yesterday at 8:36 AM
+To simplify the checks for "end game rules",  I made the assumption that we check whether "a player has no pieces on the board" or "they can't move any of their pieces" in the begining of their turn. I believe you assume that you check this after they complete their turn. 
+If you want to keep your code as it is, make sure to document this assumption in your TODO file.  We will run your test with a modified version of this test (which checks if the current player has any pieces left pieces on the board after the turn is complete)
+    @Test
+    void testPlayerNoPieceEndGame2() {
+        // EXIT is at (0,0)
+        // Next move Dog (playerA) from (0,1) to (0,0)->EXIT ; Player A score :1
+        GameStatus status = escapeGameManager2.move(new CoordinateImpl(0, 1), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // Next move Dog (playerB) from (0,2) to (0,0)->EXIT ; Player B score :1
+        status = escapeGameManager2.move(new CoordinateImpl(0, 2), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // Next move FROG (playerA) from (0,3) to (0,0)->EXIT ; Player A score :2
+        status = escapeGameManager2.move(new CoordinateImpl(0, 3), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // PlayerA has no pieces left on board and has higher score, so they win.
+        assertTrue(status.getMoveResult() == GameStatus.MoveResult.WIN);
+    }
+Nicholas "Fluxxi" Armstrong — Yesterday at 12:13 PM
+Should I enforce that, or do I just not need to test for it. Right now there's nothing stopping someone from using negative indices on a non-infinite board
+Michael S. — Yesterday at 2:29 PM
+my interpretation was that a finite square board goes from (1,1) to (X, Y) as specified in config, but a finite hex board will always at least have negative spaces since its origin is (0,0) and has spaces radiate out from that center
+only thing I don't account for is improper stuff in the config file, but I feel like it's fine to assume a technically written config file for setting up a game is correct. Like the Monopoly rules don't have an extra scenario for if the banker accidentally starts a player with something other than $1500
+bernardio — Yesterday at 2:51 PM
+Can we assume we will only have games with 2 players? there are a few things in the rules that seem to make that assumption but the manual also says 2 or more
+Nicholas "Fluxxi" Armstrong — Yesterday at 4:19 PM
+I am also wondering about the above question
+Michael S. — Yesterday at 4:43 PM
+I started writing mine to support infinite, but the game winner status stuff very much seems to imply only 2 players since it wouldn't make sense to return DRAW for a player with no pieces if there could still be two players remaining 
+Nicholas "Fluxxi" Armstrong — Yesterday at 4:50 PM
+It seems like the tests expect that a player that gets all their pieces off the board doesn't win on their turn but rather at the end of their opponents next turn
+is this the intended behaviour?
+I have it that when a player exits their last piece, the game ends right there
+trajan — Yesterday at 4:58 PM
+i did the same. see professors latest reply to my question about this very test earlier today
+Nicholas "Fluxxi" Armstrong — Yesterday at 4:59 PM
+ah yeah, I thought someone had already asked but I couldn't find it somehow
+Nicholas "Fluxxi" Armstrong — Yesterday at 5:08 PM
+I'd prefer to conform to the sample test cases but my code is not going to make it easy to check before rather than after unless there's only two players
+Noobius — Yesterday at 5:08 PM
+For 
+@Test
+    void testSCOREGameRule() {
+        // EXIT is at (0,0)
+        // First move Dog (playerA) from (0,1) to (0,0)->EXIT ; Player A score :1
+        GameStatus status = escapeGameManager1.move(new CoordinateImpl(0, 1), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // Next move Dog (playerB) from (0,3) to (0,0)->EXIT ; Player B score :1
+        status = escapeGameManager1.move(new CoordinateImpl(0, 3), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // Next move Bird (playerA) from (2,-2) to (0,0)->EXIT ; Player A score :2
+        status = escapeGameManager1.move(new CoordinateImpl(2, -2), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // Next move Horse (playerB) from (-1,-1) to (0,-1) ; Player B score :1
+        status = escapeGameManager1.move(new CoordinateImpl(-1, -1), new CoordinateImpl(0, -1));
+        assertTrue(status.isValidMove());
+        // Next move Frog (playerA) from (-2,-2) to (0,-2) ; Player A score :2
+        status = escapeGameManager1.move(new CoordinateImpl(-2, -2), new CoordinateImpl(0, -2));
+        assertTrue(status.isValidMove());
+        // Next move Horse (playerB) from (0,-1) to (0,0)->EXIT ; Player B score :3 ; PlayerB should win
+        status = escapeGameManager1.move(new CoordinateImpl(0, -1), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // current player (playerB) wins
+        assertTrue(status.getMoveResult() == GameStatus.MoveResult.WIN);
+    }
+ how does playerB end up with 3 points? Only 2 of their pieces reach an exit
+Michael S. — Yesterday at 5:15 PM
+horse has a value of 2
+so dog defaults to value of 1, horse explcitly has value 2. so after they both exit Player B will have 3 points
+Noobius — Yesterday at 5:23 PM
+Oh ok thanks
+Remy Jiang — Yesterday at 8:33 PM
+The test files say exiting by moving over the exit is an extra credit test, does that mean that it is an extra credit requirement?
+Arslan Ay — Yesterday at 8:47 PM
+As explained in the game manual, "Finite boards always have coordinate components that are positive integers." So, when the board is finite, you should enforce the row and column of the coordinates to be  greater than 0 and less than the maxX (for rows) and less than maxY ( for columns).  This is true for both HEX and SQUARE boards. I will create a finite HEX board example and post it with test cases. 
+Remember that supporting "finite boards" is milestone4 requirement.
+Arslan Ay — Yesterday at 8:49 PM
+Please see ⁠hw-help⁠
+trajan — Yesterday at 8:51 PM
+Is it strictly < maxRow or <= maxRow ?
+Arslan Ay — Yesterday at 8:51 PM
+There will always be two players and we will always assume that first player listed in the .ecg file is player1 and the other one is player2.
+Arslan Ay — Yesterday at 8:53 PM
+Yes, this is intended behaviour.
+Arslan Ay — Yesterday at 8:55 PM
+For milestone3, if you pass this test you will get extra credit for milestone3.  However, it will be a required requirement for milestone4.
+Remy Jiang — Yesterday at 8:56 PM
+Thank you!
+Arslan Ay — Yesterday at 8:57 PM
+Since the coordinates start at (0,0), assume "< maxRow" and "< maxCol"
+Huy — Yesterday at 9:00 PM
+Where do we set the movement type using the strategy pattern if it isn't implied in the sample tests?
+Noobius — Yesterday at 9:05 PM
+For this test its says "// current player (playerA) can't make any moves. PlayerA who has the higher score wins" but in the assignment it says "If a player cannot move and still has at least one piece on the board, then that player loses (i.e., opponent wins)."
+
+@Test
+    void testPlayerCantMakeMove() {
+        // EXIT is at (0,0)
+        // First move Dog (playerA) from (0,1) to (0,0)->EXIT ; Player A score :1
+        GameStatus status = escapeGameManager2.move(new CoordinateImpl(0, 1), new CoordinateImpl(0, 0));
+        assertTrue(status.isValidMove());
+        // Next move Horse (playerB) from (-1,-1) to (0,-1) ; Player B score :0
+        status = escapeGameManager2.move(new CoordinateImpl(-1, -1), new CoordinateImpl(0, -1));
+        assertTrue(status.isValidMove());
+        // current player (playerA) can't make any moves. PlayerA who has the higher score wins
+        assertTrue(status.getMoveResult() == GameStatus.MoveResult.WIN);
+
+    }
+So if a player cannot make any more moves and has at least 1 piece left should they lose or should the player with the highest score win?
+And also how can playerA not make any moves? Cant the frog move to tiles (-3,-1), (-3,-2), (-1,-3), etc?
+Image
+Arslan Ay — Yesterday at 9:17 PM
+The movement  will be set according to the coordinate type and the movement pattern of the piece (LINEAR , ORTHOGONAL, etc.)  You can set the strategy "per turn" at each move.
+Arslan Ay — Yesterday at 9:24 PM
+The test testPlayerCantMakeMove() uses the second HEX board. Not the one attached.
+Noobius — Yesterday at 9:43 PM
+if a player cannot make any more moves and has at least 1 piece left should they lose or should the player with the highest score win?
+Arslan Ay — Yesterday at 9:52 PM
+Assume the tests are correct. If the player has one more pieces on the board and can't move any of its pieces, assume the player higher score wins.  I will update the assignment prompt.
+Arslan Ay — Yesterday at 9:53 PM
+Remember that this is not required for milestone3.

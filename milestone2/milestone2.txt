@@ -1,0 +1,80 @@
+CS 4233 - Term Project : Escape
+
+"Escape Game Manual" available at the following link:
+
+https://github.com/WPI-CS4233-2025C/EscapeManual/blob/main/Escape.mdLinks to an external site.
+
+Escape Milestone 2
+This assignment is to keep you on track for the final release of your project. I expect you to apply some of the principles and patterns that you have learned in this milestone.
+
+A.  Before you make any commits in your repo, create a "milestone2" branch and checkout to it. All your milestone2 code should be committed to this branch.
+
+git branch milestone2
+git checkout milestone2
+B. In milestone2,  you will implement the following features of Escape, as defined in the Escape manualLinks to an external site.:
+
+Implement a game manager that works with an infinite SQUARE game board.
+Remember that when the xMax value in the .ecg file is 0, the board has infinite rows. And similarly, when the yMax value is 0, the board has infinite columns . 
+The board must work with positive indices (i.e., all our milestone2 tests will assume positive indices, but you can also handle negative indexes in milestone2. We will test for negative indices starting milestone3.)
+In milestone2, you can assume that all of the locations on the board are CLEAR. There will be no EXIT or BLOCK locations yet.
+Update your EscapeGameBuilder and EscapeGameManagerImpl classes from milestone1 to get the "piece descriptions" and "locations" from the game configuration file and set them in the game manager .  You need to change your makeGameManager() method in EscapeGameBuilder, and write other helper functions as necessary.  
+Define classes to represent game pieces, game board, game status, etc. You may define additional classes as you think is necessary  
+Implement the ORTHOGONAL movement pattern. We will add support for other movement patterns in future milestones. 
+Add support for pieces having DISTANCE and FLY attributes.
+The client will call the move() method of the EscapeGamaManagerImpl to move a piece on the board. move()returns a GameStatus object.
+You need to determine whether the move is valid. The isValidMove() method of GameStatus should return true if the last move was valid, and should return false otherwise.
+Make sure to check the following when you validate the move. Please note that this is not a complete list. There might be other conditions you need to check in your own implementation:
+Check whether the "from" and "to" coordinates are on the board.
+Check whether there is a piece owned by the moving player on the "from" location (remember that players alternate moves beginning with the first player named in the configuration file (i.e.,  .egc file). If it is the first move, this should be the name in the gameInitializers.getPlayers()[0]).
+Check if there is a legal path for the moving piece to get from coordinate "from" to coordinate "to". You need to consider the movement pattern of the piece and its other attributes.
+In milestone2, we will only support ORTHOGONAL movement pattern. But, you should design your code carefully so that you can easily add support for other movement patterns in milestones 3 and 4. 
+In milestone2, we will support pieces having  DISTANCE and/or FLY attributes. You should test whether the movements of the pieces with DISTANCE and FLY attributes are validated correctly. 
+You will return a GameStatus object after each call to move(). The only methods that will be called on the GameStatus are: isValidMove(), getMoveResult(), and finalLocation().
+
+In milestone2, getMoveResult() will always return MoveResult.NONE , since there is no check for the end of the game yet (see item#8). (Remember that MoverResult is defined in GamaStatus.java)
+
+If the result of isValidMove() is false, then the player who attempted the move will make the next call to move(). That is, players get a chance to make a correct move if they make an invalid one. The moving player can only change after a valid move has been made.
+
+In milestone2, there is no check for end of game. That is, no rules are in play for the game configuration (yet). We will add game rules in the next milestone.
+Similar to the previous assignments, you should use TDD for milestone2.
+Sample Tests:
+The following document includes some sample tests for Milestone2.
+
+These tests use the milestone2Sample.egc Download milestone2Sample.egcconfiguration file and they assume this .ecg file is available under "configurations" package in the IntelliJ project. Make sure to change the relative path for the .ecg file (line # 25) if you copy the file to a different location in your project. 
+The sample .ecg file defines an infinite board (both xMax and yMax dimensions are 0).
+Make sure to revise the imports according to your own project structure. 
+Milestone2SampleTests.javaDownload Milestone2SampleTests.java
+
+Grading Tests:
+We used the following tests when we graded your assignment. Most tests are same as the sample tests  we provided to you; only the last 4 are new.  All tests, including the new ones, use the same ECG configuartion from sample tests. 
+
+Please note that these tests use a different test setup. If you would like to test your code using these, please copy the test methods to your own test file and delete calls to "startTest()" and "makeTestPassed()" calls in the methods. These are helper methods that we use to build the feedback for grading. 
+
+Milestone2GradingTests.javaDownload Milestone2GradingTests.java
+
+testConfig2.egcDownload testConfig2.egc
+
+Submission
+Links to an external site.
+Please commit the following to your assignment repo, to the main branch:
+
+Your whole IntelliJ project (ignore `out` folder)
+Your TODO.md file which has the list of the test tasks you wrote. 
+Copy your repo's URL and submit in this dropbox. 
+
+Rubric
+Escape-Milestone2
+Escape-Milestone2
+Criteria	Ratings	Pts
+This criterion is linked to a Learning OutcomeCorrectness : Score from running the grading tests.
+Grading tests will be available on Canvas when we publish the grades.
+Grading tests will include all given sample tests and some additional tests that involve multiple game moves, verifying for both invalid and valid moves.
+80 pts
+This criterion is linked to a Learning OutcomeThis criterion is linked to a Learning Outcome TDD tests list (in TODO.md) Your tests should indicate a good application of TDD.
+10 pts
+This criterion is linked to a Learning OutcomeReadability and organization of your code
+Make sure that your code is well organized and well commented.
+0 pts
+This criterion is linked to a Learning OutcomeGitHub commits: Make sure to commit often; preferably after you implement and test each individual feature.
+0 pts
+Total Points: 90

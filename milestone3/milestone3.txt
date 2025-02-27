@@ -1,0 +1,78 @@
+CS 4233 - Term Project : Escape
+
+"Escape Game Manual" available at the following link:
+
+https://github.com/WPI-CS4233-2025C/EscapeManual/blob/main/Escape.mdLinks to an external site.
+
+Escape Milestone 3
+This assignment is to keep you on track for the final release of your project. 
+
+A.  Before you make any commits in your repo, create a "milestone2" branch and checkout to it. All your milestone2 code should be committed to this branch.
+
+git branch milestone3
+git checkout milestone3
+B.  Building on Milestone 2, you will add the following features of Escape in Milestone 3:
+
+Infinite SQUARE board that support negative indices.
+Infinite HEX board that support negative indices.
+DIAGONAL movement pattern for SQUARE boards
+LINEAR movement pattern for HEX boards.
+VALUE attribute for pieces : pieces may have any positive VALUE (default is 1 if VALUE attribute is not specified).
+In milestone3, piece type attributes will be VALUE, DISTANCE, and FLY.
+EXIT and BLOCK locations on the board.
+EXIT: Remember that players try to move the pieces onto an EXIT location where they exit the board. The player's score is increased by the VALUE of the piece. A piece may not move over an EXIT location. Any attempt to cross an EXIT by a piece simply falls through the EXIT and is removed from the game.
+BLOCK: This type of location does not allow a piece to land on it. A piece may not cross over a BLOCK unless they have UNBLOCK or FLY capabilities (UNBLOCK will be implemented in milestone4).
+Game end rules:  In milestone3, you will check for the end of the game conditions and update the game status accordingly. For this milestone, you should check for the following:
+SCORE game rule: If this rule is included in the game configuration file,  the game should end when a player reaches the given score value (in configuration file) and that player wins the game.
+If a player cannot move and still has at least one piece on the board, then the player with higher score wins. 
+If a player doesn't have any pieces left on the board, then the player with higher score wins. 
+In milestone3, make sure to check for the following invalid moves (both for SQUARE and HEX boards):
+Try to move from an empty location 
+Try to move onto a location containing another piece  
+Try to move onto a BLOCK location 
+Try to move over a BLOCK location  
+In addition, make sure to handle the following cases:
+Try to move over an EXIT  location  -> piece exits the game. 
+Try to move onto an EXIT  location  -> piece exits the game.
+This assignment involves more work compared to milestone1, therefore please plan accordingly. 
+
+1. You should update the game builder and manager to get the "game rules" from the game configuration file and set them in the game manager .  You need to change your makeGameManager() method in EscapeGameBuilder, and write other helper functions as necessary.  
+
+2. Update your game piece implementation to support VALUE attribute for pieces. 
+
+3. Update your game status implementation as needed and define classes/methods to calculate the game end rules. 
+
+4. Customize your board implementation to support both SQUARE and HEX coordinates. You should adopt the strategy design pattern to dynamically choose the correct algorithm  for finding paths from the source to the target coordinate (strategies for  SQUARE vs HEX coordinates).  We will talk more about how to adopt the strategy pattern in lecture.
+
+5. Update your move validator and path finder algorithms to support DIAGONAL movement pattern in SQUARE boards, and LINEAR movement in HEX boards.  
+
+Remember that a call to `move()` returns a `GameStatus` object with the following methods:
+
+- `isValidMove()`: false only if an invalid move is attempted.
+- `isMoreInformation()`:  in milestone2, just return false. We will implement this method in milestone4 when we add the game observer.
+- `getMoveResult()`: will return a MoveResult enum value ({ WIN, LOSE, DRAW, or NONE ) representing the status of the game after the move has been made or an invalid move was attempted. If the game has not ended, move result should be MoveResult.NONE. If the current player (the player who made the last move) won, then it should return MoveResult.WIN, and if the current player lost, it should return MoveResult.LOSE. If there is a tie, it should return DRAW. 
+- `finalLocation()`: returns the location of the moving piece after the move. If the piece exited, then it is up to the client (for example the tests) to know that it exited. Your code doesn't need to keep track of the exited pieces. 
+
+Similar to the previous assignments, you should use TDD for milestone3.
+
+Sample Tests:
+The tests in each file uses a different configuration file (see the list below) and they assume this .ecg file is available under "configurations" package in the IntelliJ project. Make sure to change the relative path for the .ecg file  if you copy the file to a different location in your project. 
+The attached pdf file (BoardExamples.pdf Download BoardExamples.pdf) include visualizations of the boards for each game configuration. Additional blank board examples are included to help you generate your own test game configurations. 
+The sample .ecg files defines an infinite board (both xMax and yMax dimensions are 0).
+Make sure to revise the imports according to your own project structure. 
+Board illustrations: BoardExamples.pdfDownload BoardExamples.pdf
+Test files:
+Milestone3SampleTestsSQUARE.java Download Milestone3SampleTestsSQUARE.java uses milestone3SampleSQUARE.egcDownload milestone3SampleSQUARE.egc
+Milestone3SampleTestsHEX1.java Download Milestone3SampleTestsHEX1.java  uses milestone3SampleHEX1.egcDownload milestone3SampleHEX1.egc
+Milestone3SampleTestsHEX2.java Download Milestone3SampleTestsHEX2.java  uses milestone3SampleHEX2.egcDownload milestone3SampleHEX2.egc
+Please remember that these tests don't cover all game requirements.  You should write your own tests covering edge cases.  
+
+Note: We included more tests for HEX boards, since it is the major addition in milestone3. You may adopt some of the HEX tests to the SQUARE board to make sure those also work for your SQUARE board. 
+
+Submission
+Links to an external site.
+Please commit the following to your assignment repo, to the main branch:
+
+Your whole IntelliJ project (ignore `out` folder)
+Your TODO.md file which has the list of the test tasks you wrote. 
+Copy your repo's URL and submit in this dropbox. 

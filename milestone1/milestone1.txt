@@ -1,0 +1,92 @@
+CS 4233 - Term Project : Escape
+
+This term we will work on a game called Escape. You complete this project in four milestones.  Before you start working on milestone1, please read the  "Escape Game Manual" available at the following link:
+
+https://github.com/WPI-CS4233-2025C/EscapeManual/blob/main/Escape.mdLinks to an external site.
+
+Escape Milestone 1
+In the first milestone, you will implement a minimal builder for the EscapeGameManager, which is responsible for initializing the game, maintaining the game state, accepting moves in the appropriate order from an external player or controller, validating the move, reporting on the results of moves, and determining victory situations.
+
+1. Accept the below GitHub assignment;  a private repo will be created for you on the classroom GitHub organization. The starter code will be automatically committed to your repo. 
+
+https://classroom.github.com/a/yzjyNqM5Links to an external site.
+
+2. The starter code is explained further in the following document. Make sure to read it and understand the starter code before you write any code. We will talk more about it in class. 
+
+https://github.com/WPI-CS4233-2025C/EscapeManual/blob/main/StarterCode.mdLinks to an external site.
+
+3. Create a clone of your repo on your local system. 
+
+4. Before you make any commits in your repo, create a "milestone1" branch and checkout to it. All your milestone1 code should be committed to this branch.
+
+git branch milestone1
+git checkout milestone1
+5. In milestone1, you will work on the following:
+
+Define a new class called EscapeGameManagerImpl that implements EscapeGameManager interface. 
+Complete the makeGameManager() method in EscapeGameBuilder so that it returns an EscapeGameManagerImpl object. The tests that we use will create an EscapeGameBuilder with a path to the following configuration file:
+
+Coordinate type : SQUARE
+xMax :5
+yMax : 10
+Players : Chris Pat
+The EscapeGameBuilder should initialize all game configuration in the created EscapeGameManagerImpl object that it builds (i.e., board dimensions, coordinate type, and the players).
+
+EscapeGameBuilder should be able to get  the player list from EscapeGameInitializer and set them in EscapeGameManagerImpl .  You can update EscapeGameInitializer  and EscapeGameBuilder as needed; and you can store the player information any way you want. 
+Define a new class called CoordinateImpl that implements the Coordinate interface.  In addition, implement the makeCoordinate()method in the EscapeGameManagerImpl. The tests will exercise the Coordinate interface. 
+A call to any other methods in the EscapeGameManagerImpl should throw an EscapeException with the "Not implemented" message.
+The first milestone is  fairly trivial with respect to the amount of code that you have to write. More importantly, it will test your ability to understand code that you did not write and better understand the Escape starter code. You should also use TDD.
+
+Sample Tests:
+The following document includes some sample tests for Milestone1. These tests use the minimalEGC5x10SQ.egc Download minimalEGC5x10SQ.egcconfiguration file and they assume this .ecg file is available under `"configurations" folder in the application root directory.
+
+Milestone1SampleTests.java Download Milestone1SampleTests.java 
+
+Submission
+Links to an external site.
+Please commit the following to your assignment repo, to the main branch:
+
+Your whole IntelliJ project (ignore `out` folder)
+Your TODO.md file which has the list of the test tasks you wrote. 
+Copy your repo's URL and submit in this dropbox. 
+
+If you get the following error when you run the starter code, please try the suggested fix: (Thanks to Ryan for sharing this on Discord)
+
+ERROR: 
+
+ javax.xml.bind.JAXBException: Implementation of JAXB-API has not been found on module path or classpath.
+FIX: 
+
+Add these two libraries to the project structure:
+
+sun.xml.bind.jaxb.impl:2.3.4, and 
+javax.xml.bind.jaxb.api:2.3.1
+Rubric
+Escape-Milestone1
+Escape-Milestone1
+Criteria	Ratings	Pts
+This criterion is linked to a Learning OutcomeTest1: Create a game manager object.
+9 pts
+This criterion is linked to a Learning OutcomeTest2 : Check the board size of the game manager object
+9 pts
+This criterion is linked to a Learning OutcomeTest 3: Check the coordinate type of the game manager object.
+9 pts
+This criterion is linked to a Learning OutcomeTest 4: Check the player names.
+9 pts
+This criterion is linked to a Learning OutcomeTest 5 : Test makeCoordinate() method for row = 5 and column = 4; the coordinate row and column are in bounds of the board.
+Coordinate coordinate = new CoordinateImpl(5,4);
+Coordinate escapeCoordinate = escapeGameManager.makeCoordinate(5,4);
+assertEquals(coordinate.getRow(), escapeCoordinate.getRow());
+assertEquals(coordinate.getColumn(), escapeCoordinate.getColumn());
+9 pts
+This criterion is linked to a Learning OutcomeTest 6 : Test makeCoordinate() method for row=1 and column=1; the coordinate row and column are in bounds of the board.
+Coordinate coordinate = new CoordinateImpl(1,1);
+Coordinate escapeCoordinate = escapeGameManager.makeCoordinate(1,1);
+assertEquals(coordinate.getRow(), escapeCoordinate.getRow());
+assertEquals(coordinate.getColumn(), escapeCoordinate.getColumn());
+9 pts
+This criterion is linked to a Learning OutcomeTest 7 : Test makeCoordinate() method; the coordinate row and column are outside the bounds of the board. makeCoordinate() should return null.
+9 pts
+This criterion is linked to a Learning OutcomeTDD tests list (in TODO.md) Your tests should indicate a good application of TDD.
+17 pts
+Total Points: 80
